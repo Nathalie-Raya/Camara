@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
@@ -17,7 +16,6 @@ import androidx.core.content.ContextCompat
 import com.example.camara.databinding.ActivityMainBinding
 import java.io.File
 import java.lang.Exception
-import java.lang.System.currentTimeMillis
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -60,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                     this,cameraSelector,preview,imageCapture
                 )
             }catch (e: Exception){
-                Log.d(Constans.TAG,"Error al inicializar camara")
+                Log.d(Constants.TAG,"Error al inicializar camara")
             }
 
         },ContextCompat.getMainExecutor(this))
@@ -80,12 +78,12 @@ class MainActivity : AppCompatActivity() {
         if (allPermissionGranted()){
             startCamera()
         }else{
-            ActivityCompat.requestPermissions(this,Constans.REQUIRED_PERMISSIONS,Constans.REQUEST_CODE_PERMISSIONS)
+            ActivityCompat.requestPermissions(this,Constants.REQUIRED_PERMISSIONS,Constants.REQUEST_CODE_PERMISSIONS)
         }
     }
 
     private fun allPermissionGranted() =
-        Constans.REQUIRED_PERMISSIONS.all {
+        Constants.REQUIRED_PERMISSIONS.all {
             ContextCompat.checkSelfPermission(baseContext,it) == PackageManager.PERMISSION_GRANTED
 
         }
@@ -97,7 +95,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (requestCode==Constans.REQUEST_CODE_PERMISSIONS){
+        if (requestCode==Constants.REQUEST_CODE_PERMISSIONS){
             if (allPermissionGranted()){
                 startCamera()
             }else{
@@ -110,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         val imageCapture = imageCapture?:return
         val  photoFile = File(
             outPutDirectory,
-            SimpleDateFormat(Constans.FILE_NAME_FORMAT, Locale.getDefault()).format(System.currentTimeMillis())+".jpg")
+            SimpleDateFormat(Constants.FILE_NAME_FORMAT, Locale.getDefault()).format(System.currentTimeMillis())+".jpg")
         val outputOption = ImageCapture
             .OutputFileOptions
             .Builder(photoFile)
@@ -124,10 +122,10 @@ class MainActivity : AppCompatActivity() {
                     val msg = "Foto guardada"
                     Toast.makeText(this@MainActivity,"foto guardada",Toast.LENGTH_SHORT).show()
 
-                    Log.i(Constans.TAG,"Foto *******: $msg,$savedUri")
+                    Log.i(Constants.TAG,"Foto *******: $msg,$savedUri")
                 }
                 override fun onError(exception: ImageCaptureException) {
-                    Log.e(Constans.TAG,"Error:****  ${exception.message.toString()}",exception)
+                    Log.e(Constants.TAG,"Error:****  ${exception.message.toString()}",exception)
                 }
 
             }

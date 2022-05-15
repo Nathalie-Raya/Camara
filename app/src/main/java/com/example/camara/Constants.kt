@@ -2,7 +2,7 @@ package com.example.camara
 
 import android.Manifest
 
-object Constans {
+object Constants {
 
     const val TAG = "Demo Camara"
     const val FILE_NAME_FORMAT = "yy-MM-dd-HH-mm-ss-SSS"
